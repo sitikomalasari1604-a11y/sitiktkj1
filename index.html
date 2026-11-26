@@ -1,1 +1,757 @@
+```html
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teknik Komputer dan Jaringan - Materi Sistem Operasi Linux</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            navy: {
+              950: '#040914',
+              900: '#070F22',
+              800: '#0D1936',
+              700: '#16264E',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #040914;
+      color: #E2E8F0;
+    }
+    .grid-bg {
+      background-image: linear-gradient(to right, rgba(56, 189, 248, 0.06) 1px, transparent 1px),
+                        linear-gradient(to bottom, rgba(56, 189, 248, 0.06) 1px, transparent 1px);
+      background-size: 36px 36px;
+    }
+    .glass-card {
+      background: rgba(13, 25, 54, 0.72);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(56, 189, 248, 0.16);
+    }
+    .glass-card:hover {
+      border-color: rgba(56, 189, 248, 0.38);
+    }
+  </style>
+</head>
+<body class="antialiased selection:bg-sky-500 selection:text-white">
 
+  <!-- Navbar -->
+  <header class="sticky top-0 z-50 bg-navy-950/90 backdrop-blur-md border-b border-sky-500/15">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <a href="#beranda" class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center shadow-lg shadow-sky-500/25">
+          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+            <rect x="9" y="2" width="6" height="6" rx="1.5"/>
+            <rect x="2" y="16" width="6" height="6" rx="1.5"/>
+            <rect x="16" y="16" width="6" height="6" rx="1.5"/>
+            <path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/>
+            <path d="M12 8v4"/>
+          </svg>
+        </div>
+        <div>
+          <span class="font-bold text-base sm:text-lg tracking-tight text-white block leading-tight">Teknik Komputer dan <span class="text-sky-400">Jaringan</span></span>
+          <span class="text-[10px] uppercase tracking-widest text-slate-400 font-medium">Sistem Operasi Linux</span>
+        </div>
+      </a>
+
+      <!-- Desktop Menu -->
+      <nav class="hidden md:flex items-center gap-7 text-sm font-medium text-slate-300">
+        <a href="#beranda" class="hover:text-sky-400 transition">Beranda</a>
+        <a href="#profil" class="hover:text-sky-400 transition">Profil</a>
+        <a href="#materi" class="hover:text-sky-400 transition">Materi Linux</a>
+        <a href="#terminal" class="hover:text-sky-400 transition">Simulator Terminal</a>
+        <a href="#latihan" class="hover:text-sky-400 transition">Latihan</a>
+      </nav>
+
+      <!-- Mobile Menu Button -->
+      <button id="menu-btn" aria-label="Buka Menu" class="md:hidden p-2 rounded-lg text-slate-300 hover:bg-navy-800 hover:text-white transition">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Dropdown -->
+    <div id="mobile-menu" class="hidden md:hidden bg-navy-900 border-b border-sky-500/15 px-4 py-4 space-y-2.5 text-sm font-medium">
+      <a href="#beranda" class="block py-1.5 text-slate-200 hover:text-sky-400">Beranda</a>
+      <a href="#profil" class="block py-1.5 text-slate-200 hover:text-sky-400">Profil Teknik Komputer dan Jaringan</a>
+      <a href="#materi" class="block py-1.5 text-slate-200 hover:text-sky-400">Materi Sistem Operasi Linux</a>
+      <a href="#terminal" class="block py-1.5 text-slate-200 hover:text-sky-400">Simulator Terminal</a>
+      <a href="#latihan" class="block py-1.5 text-slate-200 hover:text-sky-400">Latihan Pemahaman</a>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="beranda" class="relative overflow-hidden grid-bg border-b border-sky-500/15">
+    <div class="absolute -top-24 left-1/2 -translate-x-1/2 w-[560px] h-[300px] bg-sky-500/15 blur-[110px] rounded-full pointer-events-none"></div>
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-16 md:py-24 relative">
+      <div class="max-w-3xl">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-400/25 text-sky-300 text-xs font-semibold mb-6">
+          <span class="w-2 h-2 rounded-full bg-sky-400 animate-pulse"></span>
+          Materi TKJ: Sistem Operasi Linux
+        </div>
+        <h1 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight mb-5">
+          Administrasi & Perintah Dasar <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-300">Sistem Operasi Linux</span>
+        </h1>
+        <p class="text-slate-300 text-base sm:text-lg leading-relaxed mb-8">
+          Program keahlian Teknik Komputer dan Jaringan menyediakan panduan pembelajaran Sistem Operasi Linux untuk siswa, mulai dari konsep open source, distro Linux, perintah terminal, hingga praktik pengecekan IP Address dan layanan server.
+        </p>
+        <div class="flex flex-wrap gap-3.5">
+          <a href="#materi" class="px-6 py-3 rounded-xl bg-sky-500 hover:bg-sky-400 text-navy-950 font-bold text-sm transition shadow-lg shadow-sky-500/25">
+            Baca Materi Linux
+          </a>
+          <a href="#terminal" class="px-6 py-3 rounded-xl bg-navy-800 hover:bg-navy-700 text-white border border-sky-500/25 font-semibold text-sm transition">
+            Coba Simulator Terminal
+          </a>
+        </div>
+      </div>
+
+      <!-- Highlight Cards -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-14">
+        <div class="glass-card rounded-2xl p-4">
+          <div class="font-mono text-sky-400 font-bold text-xl">Open Source</div>
+          <div class="text-xs text-slate-400 mt-1">Sumber terbuka & fleksibel</div>
+        </div>
+        <div class="glass-card rounded-2xl p-4">
+          <div class="font-mono text-cyan-300 font-bold text-xl">5 Distro</div>
+          <div class="text-xs text-slate-400 mt-1">Ubuntu, Debian, Mint, Kali, Fedora</div>
+        </div>
+        <div class="glass-card rounded-2xl p-4">
+          <div class="font-mono text-emerald-400 font-bold text-xl">10 Perintah</div>
+          <div class="text-xs text-slate-400 mt-1">Perintah dasar Terminal Linux</div>
+        </div>
+        <div class="glass-card rounded-2xl p-4">
+          <div class="font-mono text-amber-300 font-bold text-xl">8 Bab</div>
+          <div class="text-xs text-slate-400 mt-1">Materi + Praktik + Latihan</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Profil Section -->
+  <section id="profil" class="py-16 border-b border-sky-500/15 bg-navy-900/70">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="grid md:grid-cols-12 gap-8 items-center">
+        <div class="md:col-span-5">
+          <span class="text-xs font-bold uppercase tracking-widest text-sky-400">Profil Teknik Komputer dan Jaringan</span>
+          <h2 class="text-2xl sm:text-3xl font-bold text-white mt-2 mb-4">Fondasi Sistem Server & Jaringan</h2>
+          <p class="text-slate-300 text-sm leading-relaxed mb-4">
+            <strong>Teknik Komputer dan Jaringan</strong> membantu siswa membangun pemahaman praktis tentang pengelolaan sistem operasi berbasis Linux untuk kebutuhan jaringan dan server.
+          </p>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            Setelah memahami pengertian Linux dan perintah dasarnya, siswa siap melanjutkan praktik di VirtualBox serta konfigurasi IP Address, DHCP Server, DNS Server, dan Web Server.
+          </p>
+        </div>
+        <div class="md:col-span-7 grid sm:grid-cols-2 gap-4">
+          <div class="glass-card rounded-2xl p-5">
+            <div class="w-9 h-9 rounded-lg bg-sky-500/15 text-sky-400 flex items-center justify-center font-bold mb-3">01</div>
+            <h3 class="font-bold text-white text-base mb-1.5">Konsep Sistem Operasi</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">Memahami peran Linux dalam mengelola hardware, software, file, pengguna, dan layanan jaringan.</p>
+          </div>
+          <div class="glass-card rounded-2xl p-5">
+            <div class="w-9 h-9 rounded-lg bg-cyan-500/15 text-cyan-300 flex items-center justify-center font-bold mb-3">02</div>
+            <h3 class="font-bold text-white text-base mb-1.5">Ragam Distro Linux</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">Mengenal karakteristik Ubuntu, Debian, Linux Mint, Kali Linux, dan Fedora sesuai kebutuhan praktik.</p>
+          </div>
+          <div class="glass-card rounded-2xl p-5">
+            <div class="w-9 h-9 rounded-lg bg-emerald-500/15 text-emerald-400 flex items-center justify-center font-bold mb-3">03</div>
+            <h3 class="font-bold text-white text-base mb-1.5">Navigasi Terminal</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">Menguasai perintah dasar seperti pwd, ls, cd, mkdir, touch, clear, whoami, sudo, ip a, dan ping.</p>
+          </div>
+          <div class="glass-card rounded-2xl p-5">
+            <div class="w-9 h-9 rounded-lg bg-amber-500/15 text-amber-300 flex items-center justify-center font-bold mb-3">04</div>
+            <h3 class="font-bold text-white text-base mb-1.5">Siap Administrasi Server</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">Menghubungkan kompetensi Linux dengan IP Address, DHCP Server, DNS Server, Web Server, LAN, dan Firewall.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Materi Section -->
+  <section id="materi" class="py-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-widest text-sky-400">Modul Pembelajaran TKJ</span>
+          <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1">Materi TKJ: Sistem Operasi Linux</h2>
+        </div>
+        <div class="w-full md:w-72">
+          <input
+            type="text"
+            id="search-materi"
+            placeholder="Cari topik (misal: Debian, sudo, ip a)..."
+            class="w-full px-4 py-2.5 rounded-xl bg-navy-900 border border-sky-500/25 text-sm text-white placeholder-slate-400 focus:outline-none focus:border-sky-400"
+          />
+        </div>
+      </div>
+
+      <!-- Navigasi Cepat Bab -->
+      <div class="flex flex-wrap gap-2 mb-8">
+        <a href="#bab-1" class="px-3 py-1.5 rounded-lg bg-navy-800 hover:bg-sky-500/20 text-xs font-medium text-sky-300 border border-sky-500/20 transition">1. Pengertian</a>
+        <a href="#bab-2" class="px-3 py-1.5 rounded-lg bg-navy-800 hover:bg-sky-500/20 text-xs font-medium text-sky-300 border border-sky-500/20 transition">2. Fungsi</a>
+        <a href="#bab-3" class="px-3 py-1.5 rounded-lg bg-navy-800 hover:bg-sky-500/20 text-xs font-medium text-sky-300 border border-sky-500/20 transition">3. Jenis Distro</a>
+        <a href="#bab-4" class="px-3 py-1.5 rounded-lg bg-navy-800 hover:bg-sky-500/20 text-xs font-medium text-sky-300 border border-sky-500/20 transition">4. Kelebihan & Kekurangan</a>
+        <a href="#bab-5" class="px-3 py-1.5 rounded-lg bg-navy-800 hover:bg-sky-500/20 text-xs font-medium text-sky-300 border border-sky-500/20 transition">5. Perintah Dasar</a>
+        <a href="#bab-6" class="px-3 py-1.5 rounded-lg bg-navy-800 hover:bg-sky-500/20 text-xs font-medium text-sky-300 border border-sky-500/20 transition">6. Hubungan TKJ</a>
+        <a href="#bab-7" class="px-3 py-1.5 rounded-lg bg-navy-800 hover:bg-sky-500/20 text-xs font-medium text-sky-300 border border-sky-500/20 transition">7. Contoh Praktik</a>
+        <a href="#bab-8" class="px-3 py-1.5 rounded-lg bg-navy-800 hover:bg-sky-500/20 text-xs font-medium text-sky-300 border border-sky-500/20 transition">8. Kesimpulan</a>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+
+        <!-- 1. Pengertian Sistem Operasi Linux -->
+        <article id="bab-1" class="materi-item glass-card rounded-2xl p-6 scroll-mt-24">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="px-2.5 py-1 rounded-md bg-sky-500/20 text-sky-300 font-mono text-xs font-bold">01</span>
+            <h3 class="text-lg font-bold text-white">Pengertian Sistem Operasi Linux</h3>
+          </div>
+          <p class="text-sm text-slate-300 leading-relaxed mb-3">
+            <strong>Linux</strong> adalah sistem operasi (Operating System) yang bersifat <strong>open source</strong> atau sumber terbuka. Linux digunakan untuk mengelola perangkat keras dan perangkat lunak pada komputer.
+          </p>
+          <p class="text-sm text-slate-300 leading-relaxed">
+            Linux banyak digunakan pada komputer, server, jaringan komputer, dan perangkat lainnya. Sederhananya, Linux merupakan sistem operasi seperti Windows, tetapi memiliki cara penggunaan dan pengelolaan yang berbeda.
+          </p>
+        </article>
+
+        <!-- 2. Fungsi Sistem Operasi Linux -->
+        <article id="bab-2" class="materi-item glass-card rounded-2xl p-6 scroll-mt-24">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="px-2.5 py-1 rounded-md bg-sky-500/20 text-sky-300 font-mono text-xs font-bold">02</span>
+            <h3 class="text-lg font-bold text-white">Fungsi Sistem Operasi Linux</h3>
+          </div>
+          <ul class="space-y-2 text-sm text-slate-300">
+            <li>• Mengatur kerja perangkat keras komputer.</li>
+            <li>• Menjalankan aplikasi dan program.</li>
+            <li>• Mengelola file dan folder.</li>
+            <li>• Mengatur pengguna dan hak akses.</li>
+            <li>• Mengelola jaringan komputer.</li>
+            <li>• Menjalankan layanan server.</li>
+          </ul>
+        </article>
+
+        <!-- 3. Jenis-Jenis Linux (Distro Linux) -->
+        <article id="bab-3" class="materi-item glass-card rounded-2xl p-6 md:col-span-2 scroll-mt-24">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="px-2.5 py-1 rounded-md bg-sky-500/20 text-sky-300 font-mono text-xs font-bold">03</span>
+            <h3 class="text-lg font-bold text-white">Jenis-Jenis Linux (Distro Linux)</h3>
+          </div>
+          <p class="text-sm text-slate-300 mb-4">Linux memiliki beberapa jenis distribusi atau biasa disebut <strong>distro</strong>:</p>
+          <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-3.5">
+            <div class="bg-navy-950/85 border border-slate-800 rounded-xl p-4">
+              <div class="font-mono text-xs text-sky-400 mb-1">1. Ubuntu</div>
+              <p class="text-xs text-slate-300 leading-relaxed">Linux yang cukup mudah digunakan oleh pemula dan banyak digunakan untuk desktop maupun server.</p>
+            </div>
+            <div class="bg-navy-950/85 border border-slate-800 rounded-xl p-4">
+              <div class="font-mono text-xs text-cyan-300 mb-1">2. Debian</div>
+              <p class="text-xs text-slate-300 leading-relaxed">Sistem operasi Linux yang dikenal stabil dan banyak digunakan untuk server.</p>
+            </div>
+            <div class="bg-navy-950/85 border border-slate-800 rounded-xl p-4">
+              <div class="font-mono text-xs text-emerald-400 mb-1">3. Linux Mint</div>
+              <p class="text-xs text-slate-300 leading-relaxed">Linux yang memiliki tampilan sederhana dan cocok untuk pengguna pemula.</p>
+            </div>
+            <div class="bg-navy-950/85 border border-slate-800 rounded-xl p-4">
+              <div class="font-mono text-xs text-amber-300 mb-1">4. Kali Linux</div>
+              <p class="text-xs text-slate-300 leading-relaxed">Linux yang banyak digunakan untuk pembelajaran keamanan jaringan dan pengujian keamanan secara legal.</p>
+            </div>
+            <div class="bg-navy-950/85 border border-slate-800 rounded-xl p-4">
+              <div class="font-mono text-xs text-purple-300 mb-1">5. Fedora</div>
+              <p class="text-xs text-slate-300 leading-relaxed">Distribusi Linux yang menyediakan teknologi dan perangkat lunak terbaru.</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- 4. Kelebihan dan Kekurangan Linux -->
+        <article id="bab-4" class="materi-item glass-card rounded-2xl p-6 md:col-span-2 scroll-mt-24">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="px-2.5 py-1 rounded-md bg-sky-500/20 text-sky-300 font-mono text-xs font-bold">04</span>
+            <h3 class="text-lg font-bold text-white">Kelebihan dan Kekurangan Linux</h3>
+          </div>
+          <div class="grid md:grid-cols-2 gap-4">
+            <div class="bg-navy-950/80 border border-emerald-500/20 rounded-xl p-4">
+              <h4 class="font-bold text-emerald-400 text-sm mb-2.5">Kelebihan</h4>
+              <ul class="space-y-1.5 text-xs sm:text-sm text-slate-300">
+                <li>• Gratis dan open source.</li>
+                <li>• Relatif aman.</li>
+                <li>• Stabil untuk menjalankan server.</li>
+                <li>• Bisa dikembangkan dan dimodifikasi.</li>
+                <li>• Mendukung berbagai aplikasi jaringan.</li>
+              </ul>
+            </div>
+            <div class="bg-navy-950/80 border border-amber-500/20 rounded-xl p-4">
+              <h4 class="font-bold text-amber-300 text-sm mb-2.5">Kekurangan</h4>
+              <ul class="space-y-1.5 text-xs sm:text-sm text-slate-300">
+                <li>• Beberapa pengguna perlu beradaptasi dengan tampilannya.</li>
+                <li>• Tidak semua aplikasi Windows tersedia secara langsung.</li>
+                <li>• Penggunaan terminal membutuhkan pemahaman perintah.</li>
+                <li>• Beberapa perangkat membutuhkan konfigurasi tambahan.</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <!-- 5. Perintah Dasar Linux -->
+        <article id="bab-5" class="materi-item glass-card rounded-2xl p-6 md:col-span-2 scroll-mt-24">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="px-2.5 py-1 rounded-md bg-sky-500/20 text-sky-300 font-mono text-xs font-bold">05</span>
+            <h3 class="text-lg font-bold text-white">Perintah Dasar Linux</h3>
+          </div>
+          <p class="text-sm text-slate-300 mb-4">Dalam Linux, kita bisa menggunakan <strong>Terminal</strong> untuk memberikan perintah kepada komputer:</p>
+          <div class="overflow-x-auto rounded-xl border border-sky-500/20">
+            <table class="w-full text-left text-sm">
+              <thead class="bg-navy-950 text-sky-300 text-xs uppercase">
+                <tr>
+                  <th class="px-4 py-3">Perintah</th>
+                  <th class="px-4 py-3">Fungsi</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-800 bg-navy-900/60 text-slate-200">
+                <tr><td class="px-4 py-2.5 font-mono text-sky-400">pwd</td><td class="px-4 py-2.5">Melihat lokasi folder saat ini</td></tr>
+                <tr><td class="px-4 py-2.5 font-mono text-sky-400">ls</td><td class="px-4 py-2.5">Melihat isi folder</td></tr>
+                <tr><td class="px-4 py-2.5 font-mono text-sky-400">cd</td><td class="px-4 py-2.5">Berpindah folder</td></tr>
+                <tr><td class="px-4 py-2.5 font-mono text-sky-400">mkdir</td><td class="px-4 py-2.5">Membuat folder</td></tr>
+                <tr><td class="px-4 py-2.5 font-mono text-sky-400">touch</td><td class="px-4 py-2.5">Membuat file</td></tr>
+                <tr><td class="px-4 py-2.5 font-mono text-sky-400">clear</td><td class="px-4 py-2.5">Membersihkan terminal</td></tr>
+                <tr><td class="px-4 py-2.5 font-mono text-sky-400">whoami</td><td class="px-4 py-2.5">Melihat nama pengguna</td></tr>
+                <tr><td class="px-4 py-2.5 font-mono text-sky-400">sudo</td><td class="px-4 py-2.5">Menjalankan perintah dengan hak administrator</td></tr>
+                <tr><td class="px-4 py-2.5 font-mono text-sky-400">ip a</td><td class="px-4 py-2.5">Melihat konfigurasi IP Address</td></tr>
+                <tr><td class="px-4 py-2.5 font-mono text-sky-400">ping</td><td class="px-4 py-2.5">Menguji koneksi jaringan</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <!-- 6. Hubungan Linux dengan Materi TKJ Lainnya -->
+        <article id="bab-6" class="materi-item glass-card rounded-2xl p-6 md:col-span-2 scroll-mt-24">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="px-2.5 py-1 rounded-md bg-sky-500/20 text-sky-300 font-mono text-xs font-bold">06</span>
+            <h3 class="text-lg font-bold text-white">Hubungan Linux dengan Materi TKJ Lainnya</h3>
+          </div>
+          <p class="text-sm text-slate-300 mb-4">Linux sangat berhubungan dengan materi administrasi sistem jaringan:</p>
+          <div class="overflow-x-auto rounded-xl border border-sky-500/20">
+            <table class="w-full text-left text-sm">
+              <thead class="bg-navy-950 text-sky-300 text-xs uppercase">
+                <tr>
+                  <th class="px-4 py-3">Materi TKJ</th>
+                  <th class="px-4 py-3">Hubungannya dengan Linux</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-800 bg-navy-900/60 text-slate-200">
+                <tr><td class="px-4 py-2.5 font-semibold text-white">IP Address</td><td class="px-4 py-2.5">Mengatur alamat IP komputer</td></tr>
+                <tr><td class="px-4 py-2.5 font-semibold text-white">DHCP Server</td><td class="px-4 py-2.5">Memberikan IP otomatis</td></tr>
+                <tr><td class="px-4 py-2.5 font-semibold text-white">DNS Server</td><td class="px-4 py-2.5">Mengelola penerjemahan nama domain</td></tr>
+                <tr><td class="px-4 py-2.5 font-semibold text-white">Web Server</td><td class="px-4 py-2.5">Menjalankan layanan website</td></tr>
+                <tr><td class="px-4 py-2.5 font-semibold text-white">Jaringan LAN</td><td class="px-4 py-2.5">Mengatur koneksi jaringan</td></tr>
+                <tr><td class="px-4 py-2.5 font-semibold text-white">Firewall</td><td class="px-4 py-2.5">Mengatur keamanan lalu lintas jaringan</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <!-- 7. Contoh Praktik Linux -->
+        <article id="bab-7" class="materi-item glass-card rounded-2xl p-6 scroll-mt-24">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="px-2.5 py-1 rounded-md bg-sky-500/20 text-sky-300 font-mono text-xs font-bold">07</span>
+            <h3 class="text-lg font-bold text-white">Contoh Praktik Linux</h3>
+          </div>
+          <p class="text-sm text-slate-300 leading-relaxed mb-3">
+            Misalnya kamu ingin melihat IP Address komputer menggunakan Linux:
+          </p>
+          <ol class="list-decimal list-inside text-xs sm:text-sm text-slate-300 space-y-1.5 mb-4">
+            <li>Buka Terminal.</li>
+            <li>Ketik perintah <code class="font-mono text-sky-400">ip a</code> lalu tekan Enter.</li>
+            <li>Linux akan menampilkan informasi jaringan, termasuk alamat IP yang dimiliki komputer.</li>
+          </ol>
+          <pre class="bg-navy-950 border border-sky-500/20 rounded-xl p-3.5 font-mono text-xs text-emerald-400 overflow-x-auto"><code>$ ip a
+2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500
+    inet 192.168.1.15/24 brd 192.168.1.255 scope global eth0</code></pre>
+        </article>
+
+        <!-- 8. Kesimpulan & Saran Belajar TKJ -->
+        <article id="bab-8" class="materi-item glass-card rounded-2xl p-6 scroll-mt-24">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="px-2.5 py-1 rounded-md bg-emerald-500/20 text-emerald-300 font-mono text-xs font-bold">08</span>
+            <h3 class="text-lg font-bold text-white">Kesimpulan & Saran Belajar TKJ</h3>
+          </div>
+          <p class="text-sm text-slate-300 leading-relaxed mb-3">
+            Linux merupakan sistem operasi open source yang banyak digunakan dalam dunia TKJ, terutama untuk mengelola jaringan komputer dan menjalankan layanan server. Linux memiliki berbagai perintah terminal yang membantu administrator jaringan melakukan konfigurasi dan pengelolaan sistem.
+          </p>
+          <div class="bg-navy-950/85 border border-sky-500/20 rounded-xl p-3.5 text-xs text-sky-200 leading-relaxed">
+            <strong>Saran belajar TKJ:</strong> Setelah memahami pengertian Linux dan perintah dasarnya, lanjutkan ke praktik Linux menggunakan VirtualBox, kemudian belajar konfigurasi IP Address, DHCP Server, DNS Server, dan Web Server.
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Simulator Terminal Interaktif -->
+  <section id="terminal" class="py-16 border-t border-sky-500/15 bg-navy-900/70">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="max-w-2xl mb-6">
+        <span class="text-xs font-bold uppercase tracking-widest text-sky-400">Praktik Perintah Dasar</span>
+        <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1">Simulator Terminal Linux</h2>
+        <p class="text-sm text-slate-400 mt-1.5">Ketik perintah dasar seperti <code class="font-mono text-sky-300">pwd</code>, <code class="font-mono text-sky-300">ls</code>, <code class="font-mono text-sky-300">cd</code>, <code class="font-mono text-sky-300">mkdir folder_tkj</code>, <code class="font-mono text-sky-300">touch catatan.txt</code>, <code class="font-mono text-sky-300">ip a</code>, <code class="font-mono text-sky-300">ping 192.168.1.1</code>, atau <code class="font-mono text-sky-300">clear</code>.</p>
+      </div>
+
+      <div class="glass-card rounded-2xl overflow-hidden">
+        <div class="bg-navy-950 px-4 py-2.5 border-b border-slate-800 flex items-center justify-between text-xs font-mono text-slate-400">
+          <span id="term-path-label">siswa@tkj:~/praktik</span>
+          <span class="text-emerald-400">BASH READY</span>
+        </div>
+        <div id="term-history" class="p-4 font-mono text-xs sm:text-sm space-y-2 max-h-72 overflow-y-auto bg-navy-950/70">
+          <div class="text-slate-400">Selamat datang di Simulator Terminal Teknik Komputer dan Jaringan. Ketik <span class="text-sky-400">help</span> untuk melihat daftar perintah.</div>
+        </div>
+        <form id="term-form" class="flex items-center gap-2 p-3 bg-navy-950 border-t border-slate-800 font-mono text-xs sm:text-sm">
+          <span class="text-emerald-400 shrink-0">siswa@tkj:~$</span>
+          <input id="term-input" type="text" autocomplete="off" placeholder="Ketik perintah lalu tekan Enter..." class="w-full bg-transparent text-white focus:outline-none" />
+          <button type="submit" class="px-4 py-1.5 rounded-lg bg-sky-500 hover:bg-sky-400 text-navy-950 font-sans font-bold text-xs transition shrink-0">Jalankan</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Latihan Pemahaman -->
+  <section id="latihan" class="py-16 border-t border-sky-500/15">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="max-w-2xl mb-8">
+        <span class="text-xs font-bold uppercase tracking-widest text-sky-400">Evaluasi Mandiri</span>
+        <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1">Latihan Pemahaman</h2>
+        <p class="text-sm text-slate-400 mt-1.5">Jawab 4 pertanyaan berikut lalu klik <strong>Periksa jawaban</strong>.</p>
+      </div>
+
+      <form id="quiz-form" class="grid md:grid-cols-2 gap-5">
+        <!-- Soal 1 -->
+        <div class="glass-card rounded-2xl p-5">
+          <p class="font-semibold text-white text-sm mb-3">1. Apa yang dimaksud dengan Linux?</p>
+          <div class="space-y-2 text-xs sm:text-sm text-slate-300">
+            <label class="flex items-center gap-2.5 cursor-pointer"><input type="radio" name="q1" value="a" class="accent-sky-400"> Aplikasi untuk mengetik</label>
+            <label class="flex items-center gap-2.5 cursor-pointer"><input type="radio" name="q1" value="b" class="accent-sky-400"> Sistem operasi open source</label>
+            <label class="flex items-center gap-2.5 cursor-pointer"><input type="radio" name="q1" value="c" class="accent-sky-400"> Perangkat jaringan</label>
+          </div>
+        </div>
+
+        <!-- Soal 2 -->
+        <div class="glass-card rounded-2xl p-5">
+          <p class="font-semibold text-white text-sm mb-3">2. Perintah untuk melihat IP Address di Linux adalah ...</p>
+          <div class="space-y-2 text-xs sm:text-sm text-slate-300">
+            <label class="flex items-center gap-2.5 cursor-pointer"><input type="radio" name="q2" value="a" class="accent-sky-400"> <code class="font-mono">mkdir</code></label>
+            <label class="flex items-center gap-2.5 cursor-pointer"><input type="radio" name="q2" value="b" class="accent-sky-400"> <code class="font-mono">clear</code></label>
+            <label class="flex items-center gap-2.5 cursor-pointer"><input type="radio" name="q2" value="c" class="accent-sky-400"> <code class="font-mono">ip a</code></label>
+          </div>
+        </div>
+
+        <!-- Soal 3 -->
+        <div class="glass-card rounded-2xl p-5">
+          <p class="font-semibold text-white text-sm mb-3">3. Linux yang banyak digunakan untuk pembelajaran keamanan jaringan adalah ...</p>
+          <div class="space-y-2 text-xs sm:text-sm text-slate-300">
+            <label class="flex items-center gap-2.5 cursor-pointer"><input type="radio" name="q3" value="a" class="accent-sky-400"> Kali Linux</label>
+            <label class="flex items-center gap-2.5 cursor-pointer"><input type="radio" name="q3" value="b" class="accent-sky-400"> Linux Mint</label>
+            <label class="flex items-center gap-2.5 cursor-pointer"><input type="radio" name="q3" value="c" class="accent-sky-400"> Ubuntu</label>
+          </div>
+        </div>
+
+        <!-- Soal 4 -->
+        <div class="glass-card rounded-2xl p-5">
+          <p class="font-semibold text-white text-sm mb-3">4. Apa fungsi perintah mkdir?</p>
+          <div class="space-y-2 text-xs sm:text-sm text-slate-300">
+            <label class="flex items-center gap-2.5 cursor-pointer"><input type="radio" name="q4" value="a" class="accent-sky-400"> Menghapus file</label>
+            <label class="flex items-center gap-2.5 cursor-pointer"><input type="radio" name="q4" value="b" class="accent-sky-400"> Membuat folder</label>
+            <label class="flex items-center gap-2.5 cursor-pointer"><input type="radio" name="q4" value="c" class="accent-sky-400"> Melihat IP</label>
+          </div>
+        </div>
+
+        <div class="md:col-span-2 flex flex-col sm:flex-row sm:items-center gap-4">
+          <button type="submit" class="px-6 py-3 rounded-xl bg-sky-500 hover:bg-sky-400 text-navy-950 font-bold text-sm transition w-fit">
+            Periksa jawaban
+          </button>
+          <div id="quiz-result" class="text-sm font-medium text-slate-300"></div>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer (Tanpa Kontak & Laboratorium) -->
+  <footer class="bg-navy-950 border-t border-sky-500/15 py-12">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="grid md:grid-cols-2 gap-8 pb-8 border-b border-slate-800/80">
+        <div>
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center">
+              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                <rect x="9" y="2" width="6" height="6" rx="1.5"/>
+                <rect x="2" y="16" width="6" height="6" rx="1.5"/>
+                <rect x="16" y="16" width="6" height="6" rx="1.5"/>
+                <path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/>
+                <path d="M12 8v4"/>
+              </svg>
+            </div>
+            <span class="font-bold text-base sm:text-lg text-white">Teknik Komputer dan <span class="text-sky-400">Jaringan</span></span>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-400 leading-relaxed max-w-md">
+            Pusat pembelajaran dan pelatihan kompetensi Teknik Komputer dan Jaringan dengan fokus administrasi sistem operasi Linux dan infrastruktur jaringan.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="text-xs font-bold uppercase tracking-widest text-white mb-3">Navigasi Halaman</h4>
+          <ul class="space-y-2 text-xs sm:text-sm text-slate-400">
+            <li><a href="#beranda" class="hover:text-sky-400 transition">Beranda</a></li>
+            <li><a href="#profil" class="hover:text-sky-400 transition">Profil Teknik Komputer dan Jaringan</a></li>
+            <li><a href="#materi" class="hover:text-sky-400 transition">Materi Sistem Operasi Linux</a></li>
+            <li><a href="#terminal" class="hover:text-sky-400 transition">Simulator Terminal</a></li>
+            <li><a href="#latihan" class="hover:text-sky-400 transition">Latihan Pemahaman</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-500">
+        <p>© 2026 Teknik Komputer dan Jaringan. Seluruh hak cipta dilindungi.</p>
+        <p>Materi Pembelajaran Teknik Komputer dan Jaringan</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Toggle Menu Mobile dengan penanganan error aman
+    try {
+      const menuBtn = document.getElementById('menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      if (menuBtn && mobileMenu) {
+        menuBtn.addEventListener('click', () => {
+          mobileMenu.classList.toggle('hidden');
+        });
+        mobileMenu.querySelectorAll('a').forEach(link => {
+          link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+        });
+      }
+    } catch (err) {
+      console.error('Gagal menginisialisasi menu mobile:', err);
+    }
+
+    // Pencarian Materi secara real-time
+    try {
+      const searchInput = document.getElementById('search-materi');
+      const materiItems = document.querySelectorAll('.materi-item');
+      if (searchInput && materiItems.length > 0) {
+        searchInput.addEventListener('input', (e) => {
+          const query = (e.target.value || '').toLowerCase().trim();
+          materiItems.forEach(item => {
+            const text = (item.textContent || '').toLowerCase();
+            item.style.display = text.includes(query) ? '' : 'none';
+          });
+        });
+      }
+    } catch (err) {
+      console.error('Gagal memproses pencarian materi:', err);
+    }
+
+    // Fungsi escape HTML untuk mencegah injeksi tag pada output terminal
+    function escapeHtml(value) {
+      return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    // Simulator Terminal berbasis struktur direktori virtual
+    try {
+      const termForm = document.getElementById('term-form');
+      const termInput = document.getElementById('term-input');
+      const termHistory = document.getElementById('term-history');
+      const termPathLabel = document.getElementById('term-path-label');
+
+      // Struktur filesystem virtual per path lengkap
+      const fileSystem = {
+        '/home/siswa': {
+          dirs: ['praktik'],
+          files: ['panduan-tkj.txt']
+        },
+        '/home/siswa/praktik': {
+          dirs: [],
+          files: ['readme.txt', 'jaringan.conf']
+        }
+      };
+
+      let currentPath = '/home/siswa/praktik';
+
+      // Memastikan node direktori tersedia sebelum diakses
+      function ensureDir(path) {
+        if (!fileSystem[path]) {
+          fileSystem[path] = { dirs: [], files: [] };
+        }
+        return fileSystem[path];
+      }
+
+      // Memperbarui label path pada header simulator terminal
+      function updatePathLabel() {
+        if (termPathLabel) {
+          const displayPath = currentPath.startsWith('/home/siswa')
+            ? '~' + currentPath.slice('/home/siswa'.length)
+            : currentPath;
+          termPathLabel.textContent = `siswa@tkj:${displayPath || '~'}`;
+        }
+      }
+
+      // Menambahkan baris output ke riwayat terminal
+      function appendLine(html) {
+        if (!termHistory) return;
+        const div = document.createElement('div');
+        div.innerHTML = html;
+        termHistory.appendChild(div);
+        termHistory.scrollTop = termHistory.scrollHeight;
+      }
+
+      // Menormalisasi nama target direktori atau file
+      function sanitizeName(name) {
+        return name.replace(/^\/+|\/+$/g, '');
+      }
+
+      if (termForm && termInput && termHistory) {
+        updatePathLabel();
+
+        termForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const raw = termInput.value.trim();
+          if (!raw) return;
+
+          const safeRaw = escapeHtml(raw);
+          appendLine(`<span class="text-emerald-400">siswa@tkj:~$</span> <span class="text-white">${safeRaw}</span>`);
+
+          const parts = raw.split(/\s+/);
+          const cmd = parts[0].toLowerCase();
+          const arg = parts.slice(1).join(' ').trim();
+          const safeArg = escapeHtml(arg);
+          const currentNode = ensureDir(currentPath);
+
+          if (cmd === 'clear') {
+            termHistory.innerHTML = '';
+          } else if (cmd === 'help') {
+            appendLine(`<span class="text-sky-300">Perintah tersedia: pwd, ls, cd, mkdir, touch, clear, whoami, sudo, ip a, ping, help</span>`);
+          } else if (cmd === 'pwd') {
+            appendLine(`<span class="text-slate-200">${escapeHtml(currentPath)}</span>`);
+          } else if (cmd === 'ls') {
+            const dirEntries = currentNode.dirs.map(d => `<span class="text-sky-400 font-semibold">${escapeHtml(d)}/</span>`);
+            const fileEntries = currentNode.files.map(f => `<span class="text-cyan-200">${escapeHtml(f)}</span>`);
+            const combined = [...dirEntries, ...fileEntries];
+            appendLine(combined.length > 0 ? combined.join('   ') : `<span class="text-slate-500">(folder kosong)</span>`);
+          } else if (cmd === 'cd') {
+            if (!arg || arg === '~') {
+              currentPath = '/home/siswa';
+              ensureDir(currentPath);
+              updatePathLabel();
+              appendLine(`<span class="text-slate-400">Lokasi aktif: ${escapeHtml(currentPath)}</span>`);
+            } else if (arg === '..') {
+              if (currentPath !== '/home/siswa') {
+                const parent = currentPath.split('/').slice(0, -1).join('/') || '/home/siswa';
+                currentPath = fileSystem[parent] ? parent : '/home/siswa';
+                updatePathLabel();
+                appendLine(`<span class="text-slate-400">Lokasi aktif: ${escapeHtml(currentPath)}</span>`);
+              } else {
+                appendLine(`<span class="text-slate-400">Sudah berada di direktori utama /home/siswa.</span>`);
+              }
+            } else {
+              const targetDir = sanitizeName(arg);
+              if (!targetDir || targetDir.includes('/')) {
+                appendLine(`<span class="text-rose-400">bash: cd: ${safeArg}: direktori tidak valid</span>`);
+              } else if (currentNode.dirs.includes(targetDir)) {
+                currentPath = `${currentPath}/${targetDir}`;
+                ensureDir(currentPath);
+                updatePathLabel();
+                appendLine(`<span class="text-slate-400">Lokasi aktif: ${escapeHtml(currentPath)}</span>`);
+              } else {
+                appendLine(`<span class="text-rose-400">bash: cd: ${safeArg}: Tidak ada berkas atau direktori seperti itu (gunakan mkdir untuk membuat folder)</span>`);
+              }
+            }
+          } else if (cmd === 'mkdir') {
+            const folderName = sanitizeName(arg);
+            if (!folderName || folderName.includes('/')) {
+              appendLine(`<span class="text-rose-400">mkdir: masukkan nama folder yang valid</span>`);
+            } else if (currentNode.dirs.includes(folderName)) {
+              appendLine(`<span class="text-amber-300">mkdir: tidak dapat membuat direktori '${escapeHtml(folderName)}': Berkas sudah ada</span>`);
+            } else {
+              currentNode.dirs.push(folderName);
+              ensureDir(`${currentPath}/${folderName}`);
+              appendLine(`<span class="text-emerald-400">Folder '${escapeHtml(folderName)}' berhasil dibuat.</span>`);
+            }
+          } else if (cmd === 'touch') {
+            const fileName = sanitizeName(arg);
+            if (!fileName || fileName.includes('/')) {
+              appendLine(`<span class="text-rose-400">touch: masukkan nama file yang valid</span>`);
+            } else if (!currentNode.files.includes(fileName)) {
+              currentNode.files.push(fileName);
+            }
+            appendLine(`<span class="text-emerald-400">File '${escapeHtml(fileName)}' berhasil dibuat/diperbarui.</span>`);
+          } else if (cmd === 'whoami') {
+            appendLine(`<span class="text-slate-200">siswa</span>`);
+          } else if (cmd === 'sudo') {
+            appendLine(`<span class="text-amber-300">[sudo] hak administrator aktif untuk perintah: ${safeArg || '...'}</span>`);
+          } else if (raw === 'ip' || raw === 'ip a') {
+            appendLine(`<span class="text-slate-300">1: lo: &lt;LOOPBACK,UP&gt; inet 127.0.0.1/8<br/>2: eth0: &lt;BROADCAST,MULTICAST,UP&gt; inet 192.168.1.15/24 brd 192.168.1.255</span>`);
+          } else if (cmd === 'ping') {
+            const target = escapeHtml(arg || '192.168.1.1');
+            appendLine(`<span class="text-emerald-400">PING ${target}: 64 bytes icmp_seq=1 ttl=64 time=1.4 ms<br/>PING ${target}: 64 bytes icmp_seq=2 ttl=64 time=1.2 ms</span>`);
+          } else {
+            appendLine(`<span class="text-rose-400">bash: ${escapeHtml(cmd)}: perintah tidak ditemukan. Ketik 'help'.</span>`);
+          }
+
+          termInput.value = '';
+        });
+      }
+    } catch (err) {
+      console.error('Gagal menjalankan simulator terminal:', err);
+    }
+
+    // Latihan Pemahaman Interaktif
+    try {
+      const quizForm = document.getElementById('quiz-form');
+      const quizResult = document.getElementById('quiz-result');
+      const kunci = { q1: 'b', q2: 'c', q3: 'a', q4: 'b' };
+
+      if (quizForm && quizResult) {
+        quizForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          let skor = 0;
+          let terjawab = 0;
+
+          Object.keys(kunci).forEach(k => {
+            const checked = quizForm.querySelector(`input[name="${k}"]:checked`);
+            if (checked) {
+              terjawab++;
+              if (checked.value === kunci[k]) skor++;
+            }
+          });
+
+          if (terjawab < 4) {
+            quizResult.innerHTML = `<span class="text-amber-300">Silakan jawab semua 4 soal terlebih dahulu (${terjawab}/4 terjawab).</span>`;
+            return;
+          }
+
+          quizResult.innerHTML = `<span class="text-emerald-400 font-bold">Skor kamu: ${skor} / 4</span> <span class="text-slate-400 text-xs">(Kunci: 1. Open source, 2. ip a, 3. Kali Linux, 4. Membuat folder)</span>`;
+        });
+      }
+    } catch (err) {
+      console.error('Gagal memproses latihan pemahaman:', err);
+    }
+  </script>
+</body>
+</html>
+```
